@@ -25,9 +25,11 @@ public class Maquina {
     private String numeroMotor;
 
     @Column(columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaDeRegistro;
 
     @Column(columnDefinition = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaDeModificacion;
 
     @Column(length = 6000)
@@ -39,6 +41,12 @@ public class Maquina {
     @JoinColumn(name = "marca_id", referencedColumnName = "id")
     private Marca marca;
 
+    @PrePersist
+    public void prePersist() {
+        this.estado= true;
+        this.fechaDeRegistro = new Date();
+        this.fechaDeModificacion = new Date();
+    }
     public Maquina() {
         // TODO Auto-generated constructor stub
     }
